@@ -13,23 +13,23 @@ class CSharpRandom {
         let mk;
         
         let subtraction = (seed == -2147483648) ? 2147483647 : Math.abs(seed);
-        mj = 161803398 - subtraction;
+        mj = (161803398 - subtraction) | 0;
         this.#SeedArray[55] = mj;
         mk = 1;
         for (let i = 1; i < 55; i++) {
-            ii = Math.imul(21, i) % 55;
+            ii = (21 * i) % 55;
             this.#SeedArray[ii] = mk;
-            mk = mj - mk;
+            mk = (mj - mk) | 0;
             if (mk < 0) {
-                mk += 2147483647;
+                mk = (mk + 2147483647) | 0;
             }
             mj = this.#SeedArray[ii];
         }
         for (let k = 1; k < 5; k++) {
             for (let i = 1; i < 56; i++) {
-                this.#SeedArray[i] -= this.#SeedArray[1 + (i+30)%55];
+                this.#SeedArray[i] = (this.#SeedArray[i] - this.#SeedArray[1 + ( i + 30) % 55]) | 0;
                 if (this.#SeedArray[i] < 0) {
-                    this.#SeedArray[i] += 2147483647;
+                    this.#SeedArray[i] = (this.#SeedArray[i] + 2147483647) | 0;
                 }
             }
         }
@@ -49,7 +49,7 @@ class CSharpRandom {
             locINextp = 1;
         }
 
-        retVal = this.#SeedArray[locINext] - this.#SeedArray[locINextp];
+        retVal = (this.#SeedArray[locINext] - this.#SeedArray[locINextp]) | 0;
  
         if (retVal == 2147483647) {
             retVal--;
@@ -174,8 +174,3 @@ var imgready = false;
 img.addEventListener("load", () => {imgready = true; updateCanvas()});
 img.src = "positions.png";
 
-//rnd = new CSharpRandom(1337);
-//console.log(rnd.internalSample());
-//console.log(shuffle(1440008194));
-//console.log(text_to_numeric_seed("￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿愚"));
-//updateCanvas();
